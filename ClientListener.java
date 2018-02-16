@@ -5,49 +5,46 @@
  * displays any text received from the server.
  *
  */
-import java.net.Socket;
-import java.io.DataOutputStream;
+
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStreamReader;
+
+import java.net.Socket;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class ClientListener implements Runnable
-{
-	private Socket connectionSock = null;
 
-	ClientListener(Socket sock)
-	{
-		this.connectionSock = sock;
-	}
+public class ClientListener implements Runnable {
+  private Socket connectionSock = null;
 
-	public void run()
-	{
-       		 // Wait for data from the server.  If received, output it.
-		try
-		{
-			BufferedReader serverInput = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
-			while (true)
-			{
-				// Get data sent from the server
-				String serverText = serverInput.readLine();
-				if (serverInput != null)
-				{
-					System.out.println(serverText);
-				}
-				else
-				{
-					// Connection was lost
-					System.out.println("Closing connection for socket " + connectionSock);
-					connectionSock.close();
-					break;
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			System.out.println("Error: " + e.toString());
-		}
-	}
-} // ClientListener for MTClient
+  ClientListener(Socket sock) {
+    this.connectionSock = sock;
+  }
+
+  /**
+   * Gets message from server and dsiplays it to the user.
+   */
+  public void run() {
+    try {
+      BufferedReader serverInput = new BufferedReader(
+          new InputStreamReader(connectionSock.getInputStream()));
+      while (true) {
+        // Get data sent from the server
+        String serverText = serverInput.readLine();
+        if (serverInput != null) {
+          System.out.println(serverText);
+        } else {
+          // Connection was lost
+          System.out.println("Closing connection for socket " + connectionSock);
+          connectionSock.close();
+          break;
+        }
+      }
+    } catch (Exception e) {
+      System.out.println("Error: " + e.toString());
+    }
+  }
+} // ClientListener for MtClient
