@@ -17,3 +17,4 @@ To package the client and server in Docker containers:
 * In the server subdirectory, to create the server Docker image use:
 	docker image build -t server .
 
+*Edited it to check multiple people can work on the same project.
